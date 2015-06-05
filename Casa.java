@@ -51,4 +51,24 @@ public class Casa extends Inmueble {
     public void setZonaTranquila(boolean zonaTranquila) {
         this.zonaTranquila = zonaTranquila;
     }
+    
+    @Override
+    /**
+     * Devuelve los datos de la Casa.
+     */
+    public String toString() {
+        String text; 
+        if (jardin) {   //  Si tiene jardin.
+            text = " tiene jardín ";
+        } else {    //  No tiene jardín.
+            text = " no tiene jardín ";
+        }
+        
+        if (zonaTranquila) {    //  Si está en una zona tranquila.
+            text += "y está en una zona tranquila";
+        } else {    //  No está en una zona tranquila.
+            text += "y no está en una zona tranquila";
+        }
+        return super.toString() + text;
+    }
 }

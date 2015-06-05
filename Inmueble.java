@@ -3,7 +3,7 @@ import java.util.Random;
  *
  * @author Josu
  */
-public class Inmueble {
+public abstract class Inmueble {
 
     /**
      * @return the idActual
@@ -39,7 +39,14 @@ public class Inmueble {
     public static int getNUM_PERSONAS_MIN() {
         return NUM_PERSONAS_MIN;
     }
-
+    
+    /**
+     * @return the NUM_PERSONAS_MAX
+     */
+    public static int getNUM_PERSONAS_MAX() {
+        return NUM_PERSONAS_MAX;
+    }
+    
     /**
      * @return the DISTANCIA_MIN
      */
@@ -57,8 +64,9 @@ public class Inmueble {
     private int id; //  id del inmueble.
     private int distancia;  //  Distancia en km al centro Eivissa.
     private static int idActual = 1;    //  número de id actual.
-    private static int numMaxPersonas; //  número máximo de personas que puede albergar.    
+    private static int numMaxPersonas; //  número máximo de personas que puede albergar ESTE INMUEBLE.    
     private static final int NUM_PERSONAS_MIN = 1;  //  número de personas mínimo que puede albergar.
+    private static final int NUM_PERSONAS_MAX = 10;  //  número de personas máximo que puede albergar CUALQUIER INMUEBLE.
     private static final int DISTANCIA_MIN = 10;    //  distancia mínima al centro Eivissa.
     private static final int DISTANCIA_MAX = 50;   //  distancia máxima al centro Eivissa.
     
@@ -69,7 +77,7 @@ public class Inmueble {
     public Inmueble() {
         Random rnd = new Random();
         distancia = rnd.nextInt((DISTANCIA_MAX + 1) - DISTANCIA_MIN) + DISTANCIA_MIN;
-        numMaxPersonas = rnd.nextInt((numMaxPersonas + 1) - NUM_PERSONAS_MIN) + NUM_PERSONAS_MIN;
+        numMaxPersonas = rnd.nextInt((NUM_PERSONAS_MAX + 1) - NUM_PERSONAS_MIN) + NUM_PERSONAS_MIN;
         id = idActual;
         idActual++;
     }
@@ -101,5 +109,12 @@ public class Inmueble {
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
-
+    
+    @Override
+    /**
+     * Devuelve los datos del Inmueble.
+     */
+    public String toString() {
+        return "ID: " + id + " distancia a Eivissa: " + distancia + "km " + "puede alojar " + numMaxPersonas + " personas";
+    }
 }

@@ -85,4 +85,12 @@ public class CasaSuperLujo extends Casa{
     public void setNumHabitaciones(int numHabitaciones) {
         this.numHabitaciones = numHabitaciones;
     }
+    
+    @Override
+    /**
+     * Devuelve los datos de la Casa de super lujo.
+     */
+    public String toString() {
+        return super.toString() + " tiene " + numPiscinas + " piscinas y " + numHabitaciones + " habitaciones";
+    }
 }

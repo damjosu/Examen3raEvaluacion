@@ -51,4 +51,24 @@ public class Piso extends Inmueble {
     public void setAscensor(boolean ascensor) {
         this.ascensor = ascensor;
     }
+    
+    @Override
+    /**
+     * Devuelve los datos del Piso.
+     */
+    public String toString() {
+        String text; 
+        if (terraza) {  //  si tiene terraza.
+            text = " tiene terraza ";
+        } else {    // no tiene terraza.
+            text = " no tiene terraza ";
+        }
+        
+        if (ascensor) { //  si tiene ascensor.
+            text += "y ascensor";
+        } else {    //   no tiene ascensor.
+            text += "ni ascensor";
+        }
+        return super.toString() + text;
+    }
 }
