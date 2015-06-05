@@ -69,12 +69,11 @@ public class Aplicacion
         String casaSuperLujo = "";
         String piso = "";
         for (Inmueble inmueble : inmuebles) {
-            if (inmueble instanceof Casa) { //  Si inmueble es de tipo casa.
-                casa += inmueble.toString() + "\n";
-            }
-
+            
             if (inmueble instanceof CasaSuperLujo) {    //  Si inmueble es de tipo CasaSuperLujo.
                 casaSuperLujo += inmueble.toString() + "\n";
+            } else if (inmueble instanceof Casa) { //  Si inmueble es de tipo casa.
+                casa += inmueble.toString() + "\n";
             }
 
             if (inmueble instanceof Piso) { //  Si inmueble es de tipo Piso
