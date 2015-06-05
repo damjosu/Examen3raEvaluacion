@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.LinkedHashMap;
 /**
  *
  * @author Josu
@@ -50,6 +51,8 @@ public class Aplicacion
     }
 
     private ArrayList<Inmueble> inmuebles;  //  Los inmuebles.
+    private LinkedHashMap<Integer, Integer> reservas;    //  Reservas. La idReservaActual y el DNI del cliente.
+    private static int idReservaActual = 1;   //  Número de reserva actual.
     private static final int NUM_CASAS_MIN = 1; //  número mínimo de casas.
     private static final int NUM_CASAS_MAX = 10;    //  número máximo de casas.
     private static final int NUM_CASAS_SUPER_LUJO_MIN = 1; //  número mínimo de casas de super lujo.
@@ -64,6 +67,7 @@ public class Aplicacion
     {
         Random rnd = new Random();
         inmuebles = new ArrayList<>();
+        reservas = new LinkedHashMap<>();
         //  Número de casas aleatorio.
         int casa = rnd.nextInt((NUM_CASAS_MAX + 1) - NUM_CASAS_MIN) + NUM_CASAS_MIN;
         //  Número de casas de lujo aleatorio.
@@ -132,7 +136,34 @@ public class Aplicacion
                 }
             }
         }
-
     }
+
+    /**
+     * Reserva el inmueble si esta disponible. Guarda la reserva.
+     */
+    public void reservar(int diaLlegada, int diaSalida, int numPersonas, int id, int dni) {
+        boolean encontrado = false; //  No se ha encontrado el inmueble.
+        int i = 0;
+        while (!encontrado && i < inmuebles.size()) { //  Mientras no encuentre el inmueble y no se haya recorrido todos los inmuebles sigue iterando.
+            if(inmuebles.get(i).getId() == id) {    //  La id pasada por el usuario existe.
+                if (inmuebles.get(i).estaDisponible(diaLlegada, diaSalida, numPersonas)) {  //  Esta libre.
+                    for (int a = diaLlegada; a <= diaSalida; a++) { //  Recorre cada dia de la reserva.
+                        inmuebles.get(i).setReserva(i); //  Reserva ese día.
+                        reservas.put(idReservaActual, dni); //  Se guarda la reserva con una id especifica y el DNI del cliente.
+                        inmuebles.get(i).setNumeroReservas(inmuebles.get(i).getNumReservas() + 1);  //  Se aumenta en 1 el número de reservas del inmueble.
+                        idReservaActual++;                        
+                    } 
+                } else {
+                    System.out.println("No está libre.");
+                }
+                encontrado = true;  //   Se ha encontrado el inmueble.
+            } else {
+                System.out.println("ID introducida incorrecta.");
+            }            
+            i++;
+        }
+    }
+    
+    
 
 }

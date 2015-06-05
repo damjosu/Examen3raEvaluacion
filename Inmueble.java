@@ -64,6 +64,7 @@ public abstract class Inmueble {
 
     private int id; //  id del inmueble.
     private int distancia;  //  Distancia en km al centro Eivissa.
+    private int numReservas;    //  Número de veces que se ha reservado el inmueble.
     private LinkedHashMap<Integer, Boolean> reservas;   //  Día y true si esta ocupado , o false en caso contrario
     private static int idActual = 1;    //  número de id actual.
     private static int numMaxPersonas; //  número máximo de personas que puede albergar ESTE INMUEBLE.
@@ -78,6 +79,7 @@ public abstract class Inmueble {
      */
     public Inmueble() {
         Random rnd = new Random();
+        numReservas = 0;
         distancia = rnd.nextInt((DISTANCIA_MAX + 1) - DISTANCIA_MIN) + DISTANCIA_MIN;   //  distancia aleatoria entre unos limites.
         numMaxPersonas = rnd.nextInt((NUM_PERSONAS_MAX + 1) - NUM_PERSONAS_MIN) + NUM_PERSONAS_MIN; //  numeroMaximo de personas que puede albergar entre unos límites.
         reservas = new LinkedHashMap<>();
@@ -122,7 +124,21 @@ public abstract class Inmueble {
     public void setReserva(int dia) {
         reservas.put(dia, true);
     }
-
+    
+    /**
+     * @return el número de reservas hechas para ese inmueble.
+     */
+    public int getNumReservas() {
+        return numReservas;
+    }
+    
+    /**
+     * Número de veces que se ha reservado el inmueble.
+     */
+    public void setNumeroReservas(int numReservas) {
+        this.numReservas = numReservas;
+    }
+    
     /**
      * @return true si esta disponible, false en caso contrario.
      */
