@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.LinkedHashMap;
+import java.util.Collections;
+import java.util.Comparator;
 /**
  *
  * @author Josu
@@ -163,7 +165,21 @@ public class Aplicacion
             i++;
         }
     }
-    
-    
+
+    /**
+     * Muestra los datos del inmueble por orden de reservas de mayor a menor.
+     */
+    public void mostrarInmueblesOrdenados() {
+        Collections.sort(inmuebles, new Comparator<Inmueble>() { //  Ordena el ArrayList de mayor a menor numero de reservas
+                @Override
+                public int compare(Inmueble i1, Inmueble i2) {
+                    return new Integer(i2.getNumReservas()).compareTo(new Integer(i1.getNumReservas()));
+                }
+            });
+            
+        for (int i = 0; i < inmuebles.size(); i++) {
+            System.out.println("Reservas " + inmuebles.get(i).getNumReservas() + " " + inmuebles.get(i).toString());
+        } 
+    }
 
 }

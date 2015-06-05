@@ -4,7 +4,13 @@ import java.util.LinkedHashMap;
  *
  * @author Josu
  */
-public abstract class Inmueble {
+public abstract class Inmueble implements Comparable<Inmueble> {
+    @Override
+    public int compareTo(Inmueble i1) {
+        int compare = 0;        
+        compare = new Integer(getNumReservas()).compareTo(new Integer(i1.getNumReservas()));         
+        return compare;
+    }   
 
     /**
      * @return the idActual
@@ -124,21 +130,21 @@ public abstract class Inmueble {
     public void setReserva(int dia) {
         reservas.put(dia, true);
     }
-    
+
     /**
      * @return el número de reservas hechas para ese inmueble.
      */
     public int getNumReservas() {
         return numReservas;
     }
-    
+
     /**
      * Número de veces que se ha reservado el inmueble.
      */
     public void setNumeroReservas(int numReservas) {
         this.numReservas = numReservas;
     }
-    
+
     /**
      * @return true si esta disponible, false en caso contrario.
      */
