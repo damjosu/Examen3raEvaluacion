@@ -56,6 +56,9 @@ public class CasaSuperLujo extends Casa{
         Random rnd = new Random();
         numPiscinas = rnd.nextInt((NUM_PISCINAS_MAX + 1) - NUM_PISCINAS_MIN) + NUM_PISCINAS_MIN;
         numHabitaciones = rnd.nextInt((NUM_HABITACIONES_MAX + 1) - NUM_HABITACIONES_MIN) + NUM_HABITACIONES_MIN;
+        for (int i = 0; i < DIAS_DE_NO_ALQUILER.length; i++) {  //  Recorre el Array DIAS_DE_NO_ALQUILER
+            setReserva(DIAS_DE_NO_ALQUILER[i]); //  reserva esos dias ya que no se pueden alquilar.
+        }        
     }
 
     /**

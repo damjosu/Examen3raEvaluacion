@@ -83,7 +83,7 @@ public class Aplicacion
         }
 
     }
-    
+
     /**
      * Muestra todos los inmuebles.
      */
@@ -95,22 +95,44 @@ public class Aplicacion
             if (inmueble instanceof Casa) { //  Si inmueble es de tipo casa.
                 casa += inmueble.toString() + "\n";
             }
-            
+
             if (inmueble instanceof CasaSuperLujo) {    //  Si inmueble es de tipo CasaSuperLujo.
                 casaSuperLujo += inmueble.toString() + "\n";
             }
-            
+
             if (inmueble instanceof Piso) { //  Si inmueble es de tipo Piso
                 piso += inmueble.toString() + "\n";
             }
         }
-        
+
         System.out.println("CASAS");
         System.out.println(casa);
         System.out.println("CASAS SUPER LUJO");
         System.out.println(casaSuperLujo);
         System.out.println("PISOS");
         System.out.println(piso);
+    }
+
+    /**
+     * Comprueba si para esos dias y para ese numero de personas hay algo disponible y los muesta por pantalla.
+     */
+    public void mostrarDisponibles(int diaLlegada, int diaSalida, int numPersonas) {
+        if (diaSalida - diaLlegada <= 7) {   //  Reservan para menos de 8 dias.
+            for (int i = 0; i < inmuebles.size(); i++) {   //  Se recorren todos los inmuebles.
+                if (inmuebles.get(i).estaDisponible(diaLlegada, diaSalida, numPersonas)) {  //  Está disponible.
+                    System.out.println(inmuebles.get(i).toString());    //  Muestra los datos del inmueble disponible.
+                }
+            }
+        } else {    //  Reservan para 8 días o mas.
+            for (int i = 0; i < inmuebles.size(); i++) { //  Se recorren todos los inmuebles.
+                if (!(inmuebles.get(i) instanceof Piso)) {  //  No son pisos.  
+                    if (inmuebles.get(i).estaDisponible(diaLlegada, diaSalida, numPersonas)) {  //  Está disponible.
+                        System.out.println(inmuebles.get(i).toString());   //  Muestra los datos del inmueble disponible.
+                    } //  Descartamos los pisos ya que no pueden reservarse por más de 7 días.
+                }
+            }
+        }
+
     }
 
 }
