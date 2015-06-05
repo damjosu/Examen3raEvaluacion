@@ -76,8 +76,8 @@ public abstract class Inmueble {
      */
     public Inmueble() {
         Random rnd = new Random();
-        distancia = rnd.nextInt((DISTANCIA_MAX + 1) - DISTANCIA_MIN) + DISTANCIA_MIN;
-        numMaxPersonas = rnd.nextInt((NUM_PERSONAS_MAX + 1) - NUM_PERSONAS_MIN) + NUM_PERSONAS_MIN;
+        distancia = rnd.nextInt((DISTANCIA_MAX + 1) - DISTANCIA_MIN) + DISTANCIA_MIN;   //  distancia aleatoria entre unos limites.
+        numMaxPersonas = rnd.nextInt((NUM_PERSONAS_MAX + 1) - NUM_PERSONAS_MIN) + NUM_PERSONAS_MIN; //  numeroMaximo de personas que puede albergar entre unos límites.
         id = idActual;
         idActual++;
     }
