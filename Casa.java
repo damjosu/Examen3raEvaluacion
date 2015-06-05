@@ -4,10 +4,10 @@ import java.util.Random;
  * @author ASIR2
  */
 public class Casa extends Inmueble {
-    
+
     private boolean jardin; //  Si tiene jardin o no.
     private boolean zonaTranquila;  //  Si está en una zona tranquila o no.
-    
+
     /**
      * Constructor de la clase Casa que crea una casa que puede tener o no jardin o zona tranquila.
      */
@@ -18,12 +18,12 @@ public class Casa extends Inmueble {
         if (rnd.nextInt(1) == 0) {  //  Aleatorio entre 0 y 1, si sale 0 tiene jardin, si no no.
             jardin = true;
         }
-        
+
         if (rnd.nextInt(1) == 0) {  //  Aleatorio entre 0 y 1, si sale 0 tiene zonaTranquila, si no no.
             zonaTranquila = true;
         }
     }
-    
+
     /**
      * @return the jardin
      */
@@ -51,7 +51,19 @@ public class Casa extends Inmueble {
     public void setZonaTranquila(boolean zonaTranquila) {
         this.zonaTranquila = zonaTranquila;
     }
-    
+
+    @Override
+    /**
+     * Devuelve el precio del alquiler por dia.
+     */
+    public float calcularPrecio() {
+        float precio = 0;
+        if (jardin || zonaTranquila) {  //  Si tiebne jardin o esta en una zona tranquila.
+            precio = super.calcularPrecio() * 2;   //  Se duplica el valor.
+        }
+        return precio;
+    }    
+
     @Override
     /**
      * Devuelve los datos de la Casa.
@@ -63,7 +75,7 @@ public class Casa extends Inmueble {
         } else {    //  No tiene jardín.
             text = " no tiene jardín ";
         }
-        
+
         if (zonaTranquila) {    //  Si está en una zona tranquila.
             text += "y está en una zona tranquila";
         } else {    //  No está en una zona tranquila.

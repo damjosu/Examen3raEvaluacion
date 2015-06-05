@@ -11,56 +11,32 @@ public class Aplicacion
 {
 
     /**
-     * @return the NUM_CASAS_MIN
+     * @return the NUM_CASAS
      */
-    public static int getNUM_CASAS_MIN() {
-        return NUM_CASAS_MIN;
+    public static int getNUM_CASAS() {
+        return NUM_CASAS;
     }
 
     /**
-     * @return the NUM_CASAS_MAX
+     * @return the NUM_CASAS_SUPER_LUJO
      */
-    public static int getNUM_CASAS_MAX() {
-        return NUM_CASAS_MAX;
+    public static int getNUM_CASAS_SUPER_LUJO() {
+        return NUM_CASAS_SUPER_LUJO;
     }
 
     /**
-     * @return the NUM_CASAS_SUPER_LUJO_MIN
+     * @return the NUM_PISOS
      */
-    public static int getNUM_CASAS_SUPER_LUJO_MIN() {
-        return NUM_CASAS_SUPER_LUJO_MIN;
-    }
-
-    /**
-     * @return the NUM_CASAS_SUPER_LUJO_MAX
-     */
-    public static int getNUM_CASAS_SUPER_LUJO_MAX() {
-        return NUM_CASAS_SUPER_LUJO_MAX;
-    }
-
-    /**
-     * @return the NUM_PISOS_MIN
-     */
-    public static int getNUM_PISOS_MIN() {
-        return NUM_PISOS_MIN;
-    }
-
-    /**
-     * @return the NUM_PISOS_MAX
-     */
-    public static int getNUM_PISOS_MAX() {
-        return NUM_PISOS_MAX;
+    public static int getNUM_PISOS() {
+        return NUM_PISOS;
     }
 
     private ArrayList<Inmueble> inmuebles;  //  Los inmuebles.
     private LinkedHashMap<Integer, Integer> reservas;    //  Reservas. La idReservaActual y el DNI del cliente.
     private static int idReservaActual = 1;   //  Número de reserva actual.
-    private static final int NUM_CASAS_MIN = 1; //  número mínimo de casas.
-    private static final int NUM_CASAS_MAX = 10;    //  número máximo de casas.
-    private static final int NUM_CASAS_SUPER_LUJO_MIN = 1; //  número mínimo de casas de super lujo.
-    private static final int NUM_CASAS_SUPER_LUJO_MAX = 10;    //  número máximo de casas de super lujo.
-    private static final int NUM_PISOS_MIN = 1; //  número mínimo de pisos.
-    private static final int NUM_PISOS_MAX = 10;    //  número máximo de pisos.
+    private static final int NUM_CASAS = 5; //  número mínimo de casas.
+    private static final int NUM_CASAS_SUPER_LUJO = 5; //  número mínimo de casas de super lujo.
+    private static final int NUM_PISOS = 5; //  número mínimo de pisos.
 
     /**
      * Constructor de la Clase Aplicacion
@@ -70,21 +46,16 @@ public class Aplicacion
         Random rnd = new Random();
         inmuebles = new ArrayList<>();
         reservas = new LinkedHashMap<>();
-        //  Número de casas aleatorio.
-        int casa = rnd.nextInt((NUM_CASAS_MAX + 1) - NUM_CASAS_MIN) + NUM_CASAS_MIN;
-        //  Número de casas de lujo aleatorio.
-        int casaSuperLujo = rnd.nextInt((NUM_CASAS_SUPER_LUJO_MAX + 1) - NUM_CASAS_SUPER_LUJO_MIN) + NUM_CASAS_SUPER_LUJO_MIN;
-        //  Número de pisos aleatorio.
-        int piso = rnd.nextInt((NUM_PISOS_MAX + 1) - NUM_PISOS_MIN) + NUM_PISOS_MIN;
-        for (int i = 0; i < casa; i++) {    //  Se crean tantas casas como "casa".
+
+        for (int i = 0; i < NUM_CASAS; i++) {    //  Se crean tantas casas como "casa".
             inmuebles.add(new Casa());  //  Se añaden al ArrayList de inmuebles.
         }
 
-        for (int i = 0; i < casaSuperLujo; i++) {    //  Se crean tantas casas de super lujo como "casaSuperLujo".
+        for (int i = 0; i < NUM_CASAS_SUPER_LUJO; i++) {    //  Se crean tantas casas de super lujo como "casaSuperLujo".
             inmuebles.add(new CasaSuperLujo());  //  Se añaden al ArrayList de inmuebles.
         }
 
-        for (int i = 0; i < piso; i++) {    //  Se crean tantos pisos como "piso".
+        for (int i = 0; i < NUM_PISOS; i++) {    //  Se crean tantos pisos como "piso".
             inmuebles.add(new Piso());  //  Se añaden al ArrayList de inmuebles.
         }
 
@@ -145,8 +116,9 @@ public class Aplicacion
      */
     public void reservar(int diaLlegada, int diaSalida, int numPersonas, int id, int dni) {
         boolean encontrado = false; //  No se ha encontrado el inmueble.
+        boolean idIncorrecta = false;
         int i = 0;
-        while (!encontrado && i < inmuebles.size()) { //  Mientras no encuentre el inmueble y no se haya recorrido todos los inmuebles sigue iterando.
+        while (!idIncorrecta && !encontrado && i < inmuebles.size()) { //  Mientras no encuentre el inmueble y no se haya recorrido todos los inmuebles sigue iterando.
             if(inmuebles.get(i).getId() == id) {    //  La id pasada por el usuario existe.
                 if (inmuebles.get(i).estaDisponible(diaLlegada, diaSalida, numPersonas)) {  //  Esta libre.
                     for (int a = diaLlegada; a <= diaSalida; a++) { //  Recorre cada dia de la reserva.
@@ -161,24 +133,39 @@ public class Aplicacion
                 encontrado = true;  //   Se ha encontrado el inmueble.
             } else {
                 System.out.println("ID introducida incorrecta.");
+                idIncorrecta = true;
             }            
             i++;
         }
     }
 
     /**
-     * Muestra los datos del inmueble por orden de reservas de mayor a menor.
+     * Muestra los datos de los inmuebles por orden de reservas de mayor a menor.
      */
-    public void mostrarInmueblesOrdenados() {
+    public void mostrarInmueblesPorReservas() {
         Collections.sort(inmuebles, new Comparator<Inmueble>() { //  Ordena el ArrayList de mayor a menor numero de reservas
                 @Override
                 public int compare(Inmueble i1, Inmueble i2) {
                     return new Integer(i2.getNumReservas()).compareTo(new Integer(i1.getNumReservas()));
                 }
             });
-            
         for (int i = 0; i < inmuebles.size(); i++) {
             System.out.println("Reservas " + inmuebles.get(i).getNumReservas() + " " + inmuebles.get(i).toString());
+        } 
+    }
+    
+    /**
+     * Muestra los datos de los inmuebles ordenados de mayor a menor por precio.
+     */
+    public void mostrarInmueblesPorPrecio() {
+        Collections.sort(inmuebles, new Comparator<Inmueble>() { //  Ordena el ArrayList de mayor a menor por precio
+                @Override
+                public int compare(Inmueble i1, Inmueble i2) {
+                    return new Float(i2.calcularPrecio() * i2.getNumReservas()).compareTo(new Float(i1.calcularPrecio() * i1.getNumReservas()));
+                }
+            });
+        for (int i = 0; i < inmuebles.size(); i++) {
+            System.out.println("Precio " + inmuebles.get(i).calcularPrecio() + "€ Reservas " + inmuebles.get(i).getNumReservas() + " " + inmuebles.get(i).toString());
         } 
     }
 

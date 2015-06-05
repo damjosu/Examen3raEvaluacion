@@ -47,7 +47,7 @@ public class CasaSuperLujo extends Casa{
     private static final int NUM_PISCINAS_MIN = 1;  //  El número mínimo de piscinas que puede tener.
     private static final int NUM_PISCINAS_MAX = 4;  //  El número máxmimo de piscinas que puede tener.
     private static final int DIAS_DE_NO_ALQUILER[] = {10, 20, 25};  //  Días que no se puede alquilar.
-    
+
     /**
      * Constructor de la clase CasaSuperLujo que crea una casa de super lujo con un numero aleatorio
      * de habitaciones y piscinas. No se puede alquilar los DIAS_DE_NO_ALQUILER.
@@ -88,7 +88,20 @@ public class CasaSuperLujo extends Casa{
     public void setNumHabitaciones(int numHabitaciones) {
         this.numHabitaciones = numHabitaciones;
     }
-    
+
+    @Override
+    /**
+     * Devuelve el precio del alquiler por dia.
+     */
+    public float calcularPrecio() {
+        float precio = 1;
+        if (tieneZonaTranquila()) { //  Está en una zona tranquila
+            precio = 2; 
+        }
+        precio = precio * getPRECIO() * numPiscinas * numHabitaciones;
+        return precio;
+    }    
+
     @Override
     /**
      * Devuelve los datos de la Casa de super lujo.

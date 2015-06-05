@@ -54,6 +54,18 @@ public class Piso extends Inmueble {
     
     @Override
     /**
+     * Devuelve el precio del alquiler por dia.
+     */
+    public float calcularPrecio() {
+        float precio = 0;
+        if (terraza || ascensor) {  //  Si tiebne terraza o ascensor
+            precio = super.calcularPrecio() * 2;   //  Se duplica el valor.
+        }
+        return precio;
+    }    
+    
+    @Override
+    /**
      * Devuelve los datos del Piso.
      */
     public String toString() {

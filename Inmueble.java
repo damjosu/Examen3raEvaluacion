@@ -10,8 +10,8 @@ public abstract class Inmueble implements Comparable<Inmueble> {
         int compare = 0;        
         compare = new Integer(getNumReservas()).compareTo(new Integer(i1.getNumReservas()));         
         return compare;
-    }   
-
+    } 
+    
     /**
      * @return the idActual
      */
@@ -68,9 +68,17 @@ public abstract class Inmueble implements Comparable<Inmueble> {
         return DISTANCIA_MAX;
     }
 
+    /**
+     * @return the PRECIO
+     */
+    public static int getPRECIO() {
+        return PRECIO;
+    }
+
     private int id; //  id del inmueble.
     private int distancia;  //  Distancia en km al centro Eivissa.
     private int numReservas;    //  Número de veces que se ha reservado el inmueble.
+    private int precio;
     private LinkedHashMap<Integer, Boolean> reservas;   //  Día y true si esta ocupado , o false en caso contrario
     private static int idActual = 1;    //  número de id actual.
     private static int numMaxPersonas; //  número máximo de personas que puede albergar ESTE INMUEBLE.
@@ -78,7 +86,7 @@ public abstract class Inmueble implements Comparable<Inmueble> {
     private static final int NUM_PERSONAS_MAX = 10;  //  número de personas máximo que puede albergar CUALQUIER INMUEBLE.
     private static final int DISTANCIA_MIN = 10;    //  distancia mínima al centro Eivissa.
     private static final int DISTANCIA_MAX = 50;   //  distancia máxima al centro Eivissa.
-
+    private static final int PRECIO = 100;  //  constante del precio.
     /**
      * Constructor de la clase Inmueble que crea un Inmueble con una distancia y número
      * de personas aleatoria, y una id en base al último creado.
@@ -92,6 +100,7 @@ public abstract class Inmueble implements Comparable<Inmueble> {
         for (int i = 1; i <= 31; i++) {
             reservas.put(i, false);
         }
+        precio = 0;
         id = idActual;
         idActual++;
     }
@@ -162,6 +171,13 @@ public abstract class Inmueble implements Comparable<Inmueble> {
             disponible = false;
         }        
         return disponible;
+    }    
+    
+    /**
+     * Devuelve el precio del alquiler por dia.
+     */
+    public float calcularPrecio() {
+        return (PRECIO * numMaxPersonas) / distancia;
     }    
 
     @Override
